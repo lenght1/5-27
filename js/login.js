@@ -1,55 +1,54 @@
 class Login {
   constructor() {
     // 给登录按钮,绑定点击事件
-    this.$('.login-w .over').addEventListener('click', this.clickFn.bind(this))
+    this.$('.over').addEventListener('click', this.islogin)
+    //console.log(location.search.split('='));
+
+    //判断是否有回调页面
+    let search=location.search;
+    if(search){
+      this.url= search.split('=')[1]
+    }
   }
 
-  clickFn() {
-    // console.log(location.search.split('=')[1]);
+  islogin=()=> {
+    // console.log(this);
 
     // 获取页面中form表单
     let forms = document.forms[0].elements;
     // console.log(forms);
-    let username = forms.uname.value;
-    let password = forms.password.value
+    let username = forms.uname.value.trim();
+    let password = forms.password.value.trim();
     // 判断是否为空
-    if (!username.trim() || !password.trim()) throw new Error('Can not is null');
+    if (!username || !password) throw new Error('用户名或者密码不能为空');
 
     // console.log(username, password);
     // 注意要发送post请请求
-    axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+    //axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded';
     // xhr.setReuestHeader
     // 对参数进行编码
-    let data = `username=${username}&password=${password}`;
-    axios.post('http://localhost:8888/users/login', data).then(res => {
-      // console.log(data);
-      let { status, data } = res;
-      console.log(data);
-
-      if (status == 200) { // 请求成功
-
-        // 判断是否登录成功
-        if (data.code == 1) {
-          // token 是登录 的 标识符
-          localStorage.setItem('token', data.token);
-          localStorage.setItem('user_id', data.user.id);
-
-          //从哪里来,跳转到哪里去
-          location.assign(location.search.split('=')[1])
-        } else {  // 登录失败,就提示输入错误
-          layer.open({
-            title: '登录提示'
-            , content: '用户名或者密码输入错误'
-          });
+    let param = `username=${username}&password=${password}`;
+    axios.post('http://localhost:8888/users/login', param, {
+        headers:{
+          'Content-Type':'application/x-www-form-urlencoded'
         }
-      }
+      }).then(res=>{
+        if(res.status==200 && res.data.code== 1){
+          localStorage.setItem('token',res.data.token);
+          localStorage.setItem('user_id',res.data.user.id);
+          if(this.url){
+            location.href=this.url;
+          }
+        }
+      })
 
-    });
+    
+    
 
   }
 
-  $(tag) {
-    let res = document.querySelectorAll(tag)
+  $(ele) {
+    let res = document.querySelectorAll(ele);
     return res.length == 1 ? res[0] : res;
   }
 }
