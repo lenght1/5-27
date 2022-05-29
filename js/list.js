@@ -3,26 +3,30 @@ class List {
     // 给属性赋值,调用其它方法
     this.getData();
     this.binkEve();
-    // 将加入购物车使用事件委托
+    //默认页面
+    this.currentPage = 1;
+    this.lock = false;
   }
 
   //绑定事件的方法
   binkEve() {
     //给ul绑定点击事件，回调到事件源
     this.$('.sk_bd ul').addEventListener('click', this.checkLogin.bind(this))
+    //滚动条事件
+    window.addEventListener('scroll', this.lazyLoader)
   }
   // 获取数据的方法
-  async getData() {
+  async getData(page = 1) {
     // 等待promise 对象解包完成
-    let { status, data } = await axios.get('http://localhost:8888/goods/list')
-
+    let { status, data } = await axios.get('http://localhost:8888/goods/list?current=' + page);
+    // console.log(data);
     // console.log(data, status);
     //判断返回值的状态,追加数据
     if (status != 200 && data.code != 1) throw new Error('获取数据失败...');
     // console.log(data);
     let html = '';
     data.list.forEach(goods => {
-      // console.log(goods);
+      console.log(goods);
       html += `<li class="sk_goods" data-id="${goods.goods_id}">
         <a href="#none">
         <img src="${goods.img_big_logo}" alt="">
@@ -44,15 +48,15 @@ class List {
     </li>`;
       //console.log(html);
       //追加到ul中
-      this.$('.sk_bd ul').innerHTML = html;
+      
     });
 
-
+    this.$('.sk_bd ul').innerHTML += html;
 
 
 
   }
-//
+  //
   // 加入购物车的方法
   checkLogin(eve) {
     // console.log(this);
@@ -81,7 +85,11 @@ class List {
     //   let userId = localStorage.getItem('user_id');
   }
   addCartGoods(gId, uId) {
-
+    /**
+     *给购物车添加接口，发送请求
+    
+     调用接口，后台验证登录状态，需要传递token
+     */
     const AUTH_TOKEN = localStorage.getItem('token');
     axios.defaults.headers.common['authorization'] = AUTH_TOKEN;
     axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded';
@@ -119,7 +127,23 @@ class List {
     })
 
   }
+  /***懒加载**/
+  lazyLoader = () => {
+    //需要滚动条高度，可视区高度，实际高度
+    let top = document.documentElement.scrollTop;
+    let cliH = document.documentElement.clientHeight;
+    let conH = this.$('.sk_container').offsetHeight;
+    //滚动条高度（卷曲部分）+可视区>实际高度时，加载数据
+    if (top + cliH > (conH + 450)) {
+      if (this.lock) return;
+      this.lock = true;
+      setTimeout(() => {
+        this.lock = false;
 
+      }, 1000)
+      this.getData(++this.currentPage)
+    }
+  }
 
   $(ele) {
     let res = document.querySelectorAll(ele);

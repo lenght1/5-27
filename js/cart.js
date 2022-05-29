@@ -1,28 +1,64 @@
 class Cart {
   constructor() {
-
+    
     this.getCartGoods();
     this.$('.cart-list').addEventListener('click', this.dispatch);
     this.$('.cart-th input').addEventListener('click', this.checkAll);
 
   }
-  // 绑定事件
-  bindEve() {
-    this.$('.cart-list').addEventListener('click', this.distributeEve.bind(this));
+  /***事件委托的分发***/
 
-    // 给全选按钮绑定事件
-    this.$('.cart-th input').addEventListener('click', this.clickAllChecked.bind(this))
-  }
   dispatch = (eve) => {
     let target = eve.target;
-    if (target.nodeName == 'A' && target.classList.contains('dell')) this.delGoodsData(target)
+    if (target.nodeName == 'A' && target.classList.contains('del1')) this.delGoodsData(target);
     if (target.nodeName == 'A' && target.classList.contains('plus')) this.plusGoodsNum(target);
+    if (target.nodeName == 'A' && target.classList.contains('mins')) this.minsGoodsNum(target);
+  }
+  /********数量减少的方法**********/
+  minsGoodsNum=(tar)=>{
+    let ul = tar.parentNode.parentNode.parentNode;
+    // console.log(ul);
+    // 获取数量,单价和小计
+    let num = ul.querySelector('.itxt');
+    let sum = ul.querySelector('.sum');
+    let price = ul.querySelector('.price').innerHTML - 0;
+    // console.log(num, sum, price);
+
+    // 获取数量
+    let numVal = num.value;
+    // 对数量进行加1 操作
+    if (numVal>0)
+      
+    
+      numVal--;
+    
+      // 给 服务器发送数据,减少数量
+      const AUTH_TOKEN = localStorage.getItem('token')
+      axios.defaults.headers.common['authorization'] = AUTH_TOKEN;
+      axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+      let uId = localStorage.getItem('user_id');
+      let gId = ul.dataset.id;
+      let param = `id=${uId}&goodsId=${gId}&number=${numVal}`
+      axios.post('http://localhost:8888/cart/number', param).then(res => {
+        // console.log(res);
+        let { status, data } = res;
+        if (status == 200 && data.code == 1) {
+          // 将更新之后的数量设置回去
+          num.value = numVal;
+          sum.innerHTML = parseInt(numVal * price * 100) / 100;
+          // 调用统计数量和价格的方法
+          this.countSumPrice();
+        }
+  
+      });
+  
+    
   }
   /*******数量增加的方法********/
   plusGoodsNum = (tar) => {
     // console.log(tar);
     let ul = tar.parentNode.parentNode.parentNode;
-    // console.log(ul);
+    console.log(ul);
     // 获取数量,单价和小计
     let num = ul.querySelector('.itxt');
     let sum = ul.querySelector('.sum');
@@ -56,6 +92,7 @@ class Cart {
 
     });
 
+    
 
 
   }
