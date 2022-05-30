@@ -26,17 +26,18 @@
     position: relative;
     cursor: move;
 }
+.small {
+    position: relative;
+  }
 .mask {
-    display: none;
+    width: 175px;
+    height: 175px;
+    background: rgba(231, 231, 141, 0.4);
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 300px;
-    height: 300px;
-    background-color: #FEDE4F;
-    opacity: .5;
-    border: 1px solid #ccc;
+    top: 0px;
+    left: 0px;
     cursor: move;
+    display: none;
 }
 .big {
     display: none;
@@ -49,7 +50,7 @@
     border: 1px solid #ccc;
     overflow: hidden;
 }
-.big img {
+.bigimg {
     position: absolute;
     top: 0;
     left: 0;
@@ -360,7 +361,7 @@
 }
 .item h3 {
     display: inline-block;
-    float: left;
+    /* /* float: left;  */
     width: 110px;
     text-align: right;
 }

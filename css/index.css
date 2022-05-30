@@ -127,12 +127,67 @@
 }
 /*箭头部分开始*/
 .grid-col2-t {
-	position: relative;
+	
 	height: 340px;
+	
+	overflow: hidden;
+	position: relative;
 }
+.grid-col2-t ul li.ac {
+	z-index: 5;
+	opacity: 1;
+  }
 .t-img li {
+	height: 340px;
+	/* 看不见图片 */
+	opacity: 0;
 	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 0;
+	transition: opacity 1.5s;
 }
+
+.grid-col2-t ol li.ac {
+	background: red;
+	color: #fff;
+  }
+  .sy li {
+	width: 20px;
+	height: 20px;
+	background: #fff;
+	margin-left: 5px;
+	float: left;
+	line-height: 20px;
+	text-align: center;
+	cursor: pointer;
+  }
+
+  .sy li {
+	width: 20px;
+	height: 20px;
+	background: #fff;
+	margin-left: 5px;
+	float: left;
+	line-height: 20px;
+	text-align: center;
+	cursor: pointer;
+  }
+  .grid-col2-t>a {
+	text-decoration: none;
+	position: absolute;
+	top: 50%;
+	margin-top: -10px;
+	height: 40px;
+	line-height: 32px;
+	text-align: center;
+	width: 40px;
+	font-size: 40px;
+	vertical-align: middle;
+	color: #fff;
+	background: rgba(0, 0, 0, 0.5);
+	z-index: 6;
+  }
 .arrow-l,
 .arrow-r {
 	position: absolute;
@@ -413,7 +468,7 @@
     width: 130px;
     height: 30px;
     margin-top: 10px;
-	margin: 20px auto 0;
+	margin: 10px auto 0;
 	overflow: hidden;
 }
 .timer span {
@@ -422,13 +477,16 @@
 	width: 30px;
 	height: 30px;
 	line-height: 30px;
-	margin-right: 20px;
+	margin-right: 10px;
 	font-size: 20px;
-	float: left;
+
+	
 	position: relative;
 }
 .timer span:last-child {
 	margin-right: 0;
+	float: right;
+	
 }
 .timer span::after {
 	content: ":";

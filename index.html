@@ -10,9 +10,7 @@
 		<link rel="stylesheet" href="css/normalize.css" />
 		<link rel="stylesheet" href="css/base.css" />
 		<link rel="stylesheet" href="css/index.css" />
-		<script src="js/jquery.min.js"></script>
-		<script src="js/base.js"></script>
-		<script src="js/index.js"></script>
+		
 	</head>
 	<body>
 		<header>
@@ -3171,14 +3169,21 @@
 			<div class="grid-col2 fl">
 				<div class="grid-col2-t">
 					<ul class="t-img">
-						<li><a href="#"><img src="images/banner.jpg" height="340" width="790" alt=""></a></li>
+						<li class="ac"><a href="#"><img src="images/banner.jpg" height="340" width="790" alt=""></a></li>
 						<li><a href="#"><img src="images/banner1.jpg" height="340" width="790" alt=""></a></li>
 						<li><a href="#"><img src="images/banner2.jpg" height="340" width="790" alt=""></a></li>
 						<li><a href="#"><img src="images/banner3.jpg" height="340" width="790" alt=""></a></li>
 					</ul>
+					<ol class="sy">
+						<li class="ac">1</li>
+						<li>2</li>
+						<li>3</li>
+						<li>4</li>
+					
+					  </ol>
 					<div>
-						<a href="javascript:;" class="arrow-l"><</a>
-						<a href="javascript:;" class="arrow-r">></a>
+						<a href="javascript:;" id="goPrev" class="arrow-l"><</a>
+						<a href="javascript:;" id="goNext" class="arrow-r">></a>
 					</div>
 					<ol class="circle">
 					</ol>
@@ -3269,7 +3274,7 @@
 			<div class="countdown-hd fl">
 				<h3>京东秒杀</h3>
 				<div class="hd_countdown">
-					<strong>14:00</strong>点场 倒计时
+					<strong class="changci">14:00</strong>点场 倒计时
 					<div class="timer">
 						<span class="hour">1</span>
 						<span class="minute">2</span>
@@ -3657,5 +3662,8 @@
 				<li><a href="#"><img src="uploads/nav-4.png" width="100%" alt=""></a></li>
 			</ul>
 		</div>
+		<script src="./js/jquery-2.2.4.js"></script> 
+		<!-- <script src="./js/base.js"></script> -->
+		<script src="./js/index.js"></script>
 	</body>
 </html>
