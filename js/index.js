@@ -83,37 +83,38 @@ function change() {
 
 //倒计时
 /*****获取当前时分秒****/
-function countTime() {  
+function countTime() {
     //获取当前时间  
-    var date = new Date();  
-    var now = date.getTime();  
-    
-   
-    
-    //定义变量 d,h,m,s保存倒计时的时间  
-    var c,h,m,s,hour;  
-   
-        h = + date.getHours();  
-        // console.log(h);
-        m =59- date.getMinutes();  
-        // console.log(m);
-        s =60- date.getSeconds(); 
-        // console.log(s);                    
-     if(h%2==0){
-        c=h;
-        hour=1;
-     }
-     else{
-        c=h-1;
-        hour=0;
-     }
-    //将倒计时赋值到DOM中  
-    document.querySelector(".changci").innerHTML = c;  
-    document.querySelector(".hour").innerHTML = hour+"时";  
-    document.querySelector(".minute").innerHTML = m+"分";  
-    document.querySelector(".second").innerHTML = s+"秒";  
-    //递归每秒调用countTime方法，显示动态时间效果  
-    setTimeout(countTime,1000);  
+    var date = new Date();
+    var now = date.getTime();
 
-} 
+
+
+    //定义变量 d,h,m,s保存倒计时的时间  
+    var c, h, m, s, hour;
+
+    h = + date.getHours();
+    // console.log(h);
+    m = 59 - date.getMinutes();
+    // console.log(m);
+    s = 60 - date.getSeconds();
+    // console.log(s);                    
+    if (h % 2 == 0) {
+        c = h;
+        hour = 1;
+    }
+    else {
+        c = h - 1;
+        hour = 0;
+    }
+    //将倒计时赋值到DOM中  
+    document.querySelector(".changci").innerHTML = c;
+    document.querySelector(".hour").innerHTML = hour + "时";
+    document.querySelector(".minute").innerHTML = m + "分";
+    document.querySelector(".second").innerHTML = s + "秒";
+    //递归每秒调用countTime方法，显示动态时间效果  
+    setTimeout(countTime, 1000);
+
+}
 countTime();
+

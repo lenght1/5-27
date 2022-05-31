@@ -40,11 +40,8 @@ class Login {
             location.href=this.url;
           }
         }
-      })
-
+      })          
     
-    
-
   }
 
   $(ele) {
